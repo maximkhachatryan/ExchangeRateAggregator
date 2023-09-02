@@ -12,5 +12,7 @@ namespace ExchangeRateAggregator.Domain.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public WebParser Parser { get; set; }
+
+        public virtual ICollection<CurrencyRate> CurrencyRates { get; set; }
     }
 }
