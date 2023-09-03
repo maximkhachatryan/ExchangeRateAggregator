@@ -11,6 +11,10 @@ namespace ExchangeRateAggregator.Infrastructure.Persistence.EntityFramework
 {
     public class ExchangeRateAggregatorDbContext : DbContext
     {
+        public ExchangeRateAggregatorDbContext(DbContextOptions options)
+            : base(options)
+        { }
+
         public DbSet<Bank> Banks { get; set; }
         public DbSet<CurrencyRate> CurrencyRates { get; set; }
 

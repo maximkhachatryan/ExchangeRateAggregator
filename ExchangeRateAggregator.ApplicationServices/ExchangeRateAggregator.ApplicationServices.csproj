@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ExchangeRateAggregator.ApplicationContracts\ExchangeRateAggregator.ApplicationContracts.csproj" />
+    <ProjectReference Include="..\ExchangeRateAggregator.Domain\ExchangeRateAggregator.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
