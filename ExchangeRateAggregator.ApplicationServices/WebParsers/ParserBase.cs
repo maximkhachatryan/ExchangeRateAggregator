@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ExchangeRateAggregator.ApplicationContracts.Contracts.WebParsers;
+using ExchangeRateAggregator.ApplicationContracts.Dtos.WebParsers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ExchangeRateAggregator.ApplicationServices.WebParsers
 {
-    internal class ParserBase
+    internal abstract class ParserBase : IWebParser
     {
         private readonly string _source;
 
@@ -14,5 +16,7 @@ namespace ExchangeRateAggregator.ApplicationServices.WebParsers
         {
             this._source = source;
         }
+
+        public abstract Dictionary<string, ParseResult> Parse(string source);
     }
 }
