@@ -13,6 +13,9 @@ namespace ExchangeRateAggregator.Domain.Entities
         public string Name { get; set; }
         public WebParser Parser { get; set; }
 
+        //API endpoint or Scrapping page address
+        public string Source { get; set; }
+
         public virtual ICollection<CurrencyRate> CurrencyRates { get; set; }
     }
 }

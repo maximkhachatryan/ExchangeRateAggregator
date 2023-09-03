@@ -22,6 +22,7 @@ namespace ExchangeRateAggregator.Infrastructure.Persistence.EntityFramework
                 entity.Property(e => e.BuyRate).HasColumnType("decimal(12, 6)");
                 entity.Property(e => e.SellRate).HasColumnType("decimal(12, 6)");
 
+
                 entity
                     .HasOne(c => c.Bank)
                     .WithMany(b => b.CurrencyRates);
@@ -31,6 +32,8 @@ namespace ExchangeRateAggregator.Infrastructure.Persistence.EntityFramework
             modelBuilder.Entity<Bank>(entity =>
             {
                 entity.Property(e => e.Name).HasMaxLength(64);
+                entity.Property(e => e.Source).HasMaxLength(256);
+
 
             });
 
