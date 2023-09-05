@@ -1,6 +1,7 @@
 ﻿using ExchangeRateAggregator.ApplicationContracts.Contracts.Services.ApplicationServices;
 using ExchangeRateAggregator.ApplicationContracts.Dtos;
 using ExchangeRateAggregator.ApplicationContracts.Dtos.WebParsers;
+using ExchangeRateAggregator.ApplicationContracts.Exceptions;
 using ExchangeRateAggregator.ApplicationServices.WebParsers;
 using ExchangeRateAggregator.ApplicationServices.WebParsers.ParsersByScrapping;
 using ExchangeRateAggregator.Domain.Contracts;
@@ -52,7 +53,7 @@ namespace ExchangeRateAggregator.ApplicationServices
         {
             var bank = await _unitOfWork.BanksRepository.GetSingleOrDefaultAsync(b => b.Id == bankId);
             if (bank == null)
-                throw new InvalidOperationException("Provided BankId is missing");
+                throw new NotFoundException("Provided BankId is missing");
 
             var parser = _parserFactory.CreateParser(bank);
             var parseResult = await parser.Parse();
@@ -65,7 +66,7 @@ namespace ExchangeRateAggregator.ApplicationServices
         {
             var bank = await _unitOfWork.BanksRepository.GetSingleOrDefaultAsync(b => b.Id == bankId);
             if (bank == null)
-                throw new InvalidOperationException("Provided BankId is missing");
+                throw new NotFoundException("Provided BankId is missing");
 
             await UpdateCurrencyRates(bank.Id, currencyRates);
         }
