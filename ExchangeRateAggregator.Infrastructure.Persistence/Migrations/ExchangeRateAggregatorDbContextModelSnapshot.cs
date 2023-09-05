@@ -44,7 +44,7 @@ namespace ExchangeRateAggregator.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Banks");
+                    b.ToTable("Banks", (string)null);
                 });
 
             modelBuilder.Entity("ExchangeRateAggregator.Domain.Entities.CurrencyRate", b =>
@@ -73,7 +73,7 @@ namespace ExchangeRateAggregator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("BankId");
 
-                    b.ToTable("CurrencyRates");
+                    b.ToTable("CurrencyRates", (string)null);
                 });
 
             modelBuilder.Entity("ExchangeRateAggregator.Domain.Entities.CurrencyRate", b =>
