@@ -1,5 +1,4 @@
 using ExchangeRateAggregator.Api.Extensions;
-using ExchangeRateAggregator.ApplicationContracts.Contracts.Services.ApplicationServices;
 using ExchangeRateAggregator.Composition;
 
 var builder = WebApplication.CreateBuilder(args);
