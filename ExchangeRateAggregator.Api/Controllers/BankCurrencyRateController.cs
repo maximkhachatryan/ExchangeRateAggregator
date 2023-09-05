@@ -29,7 +29,7 @@ namespace ExchangeRateAggregator.Api.Controllers
         }
 
         /// <summary>
-        /// Executes the WebParser to update Currency Rates from the source of spcified bank
+        /// Executes the WebParser to update Currency Rates from the source of specified bank
         /// </summary>
         /// <param name="bankId"></param>
         /// <returns></returns>
