@@ -5,9 +5,10 @@ using ExchangeRateAggregator.ApplicationContracts.Dtos.WebParsers;
 
 namespace ExchangeRateAggregator.Api.Controllers
 {
+    [ApiVersion("1")]
     [Route("api/[controller]")]
     [ApiController]
-    public class BankCurrencyRateController : ControllerBase
+    public class BankCurrencyRateController : BaseApiController
     {
         private readonly IBankCurrencyRateService _bankCurrencyRateService;
 
