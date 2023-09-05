@@ -102,8 +102,8 @@ namespace ExchangeRateAggregator.ApplicationServices
                         nameof(CurrencyRate.BuyRate),
                         nameof(CurrencyRate.SellRate));
                 }
-                await _unitOfWork.CompleteAsync();
             }
+            await _unitOfWork.CompleteAsync();
         }
     }
 }

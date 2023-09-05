@@ -24,23 +24,46 @@ namespace ExchangeRateAggregator.ApplicationServices.WebParsers.ParsersByScrappi
         {
             var result = new Dictionary<string, ParseResult>();
 
-            //var httpClient = _httpClientFactory.CreateClient();
+            var httpClient = _httpClientFactory.CreateClient();
 
-            //try
-            //{
-            //    string htmlContent = await httpClient.GetStringAsync(_source);
+            try
+            {
+                string htmlContent = await httpClient.GetStringAsync(_source);
 
-            //    // Load the HTML content into the HtmlDocument
-            //    HtmlDocument htmlDocument = new HtmlDocument();
-            //    htmlDocument.LoadHtml(htmlContent);
+                // Load the HTML content into the HtmlDocument
+                HtmlDocument htmlDocument = new HtmlDocument();
+                htmlDocument.LoadHtml(htmlContent);
 
-            //    var node = htmlDocument.GetElementbyId("dnn_ctr40461_View_grdForwardRates");
+                var table = htmlDocument.DocumentNode.SelectSingleNode("//table[@id='dnn_ctr20025_View_grdRates']");
+                var rows = table.SelectNodes(".//tr[@class='Item']");
+                if (rows != null)
+                {
+                    foreach (var row in rows)
+                    {
+                        var cells = row.SelectNodes("td");
+                        if (cells != null && cells.Count >= 4)
+                        {
+                            var currency = cells[0].InnerText;
+                            var buy = cells[1].InnerText;
+                            var sell = cells[2].InnerText;
 
-            //    //To be continued...
-            //}
-            //catch (HttpRequestException e)
-            //{
-            //}
+                            try
+                            {
+                                result[currency] = new ParseResult
+                                {
+                                    BuyRate = decimal.Parse(buy),
+                                    SellRate = decimal.Parse(sell)
+                                };
+                            }
+                            catch(FormatException) { }
+                        }
+                    }
+                }
+            }
+            catch (HttpRequestException e)
+            {
+
+            }
 
             return await Task.FromResult(result);
         }

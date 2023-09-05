@@ -31,6 +31,8 @@ namespace ExchangeRateAggregator.Infrastructure.Persistence.EntityFramework
                     .HasOne(c => c.Bank)
                     .WithMany(b => b.CurrencyRates);
 
+                entity.HasIndex(c => c.CurrencyCode).IsUnique();//Unique constraint
+
             });
 
             modelBuilder.Entity<Bank>(entity =>
@@ -38,6 +40,8 @@ namespace ExchangeRateAggregator.Infrastructure.Persistence.EntityFramework
                 entity.Property(e => e.Name).HasMaxLength(64);
                 entity.Property(e => e.Source).HasMaxLength(256);
 
+                entity.HasIndex(e => e.Parser).IsUnique();//Unique constraint
+                entity.HasIndex(e => e.Name).IsUnique();//Unique constraint
 
             });
 
