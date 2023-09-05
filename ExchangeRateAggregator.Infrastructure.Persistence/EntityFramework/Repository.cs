@@ -25,40 +25,60 @@ namespace ExchangeRateAggregator.Infrastructure.Persistence.EntityFramework
             => await _dbSet.FindAsync(ids);
 
         public async Task<IEnumerable<TEntity>> GetAsync(
-            int? skip = null,
-            int? take = null,
+            Expression<Func<TEntity, bool>>? predicate = null,
             params Expression<Func<TEntity, object>>[] includeProperties)
         {
             var query = Include(includeProperties);
-            SkipTake(ref query, skip, take);
-            return await query.AsSplitQuery().ToListAsync();
+            if (predicate != null)
+                query = query.Where(predicate);
+            return await query.ToListAsync();
         }
 
-        public Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task<TEntity?> GetSingleOrDefaultAsync(
+            Expression<Func<TEntity, bool>> predicate,
+            params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            throw new NotImplementedException();
+            var query = Include(includeProperties);
+            return await query.SingleOrDefaultAsync(predicate);
         }
 
-        public Task<TEntity> CreateAsync(TEntity entity)
+        public async Task<TEntity> CreateAsync(TEntity entity)
         {
-            throw new NotImplementedException();
+            await _dbSet.AddAsync(entity);
+            return entity;
+        }
+
+        public void UpdatePartially(TEntity entity, params string[] properties)
+        {
+            if (_dbContext.Entry(entity).State == EntityState.Detached)
+                _dbSet.Attach(entity);
+            var entry = _dbContext.Entry(entity);
+            if (properties.Any())
+            {
+                foreach (var prop in properties)
+                    entry.Property(prop).IsModified = true;
+            }
+            else
+            {
+                entry.State = EntityState.Modified;
+            }
+        }
+
+        public void Update(TEntity entity)
+        {
+            _dbContext.Update(entity);
+        }
+
+        public void UpdateRange(IEnumerable<TEntity> entities)
+        {
+            _dbContext.UpdateRange(entities);
         }
 
         public void Remove(params TEntity[] entities)
         {
-            throw new NotImplementedException();
-        }
-
-        private void SkipTake(
-            ref IQueryable<TEntity> query,
-            int? skip = null,
-            int? take = null)
-        {
-            if (skip.HasValue)
+            foreach (var item in entities)
             {
-                query = query.Skip(skip.Value);
-                if (take.HasValue)
-                    query = query.Take(take.Value);
+                _dbSet.Remove(item);
             }
         }
 

@@ -8,7 +8,7 @@ namespace ExchangeRateAggregator.Domain.Enums
 {
     public enum WebParser
     {
-        AmeriaBank = 1,
-        InecoBank = 2
+        InecoBank = 1,
+        AmeriaBank = 2,
     }
 }

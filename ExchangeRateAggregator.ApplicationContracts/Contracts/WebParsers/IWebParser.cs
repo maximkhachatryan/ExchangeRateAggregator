@@ -9,6 +9,6 @@ namespace ExchangeRateAggregator.ApplicationContracts.Contracts.WebParsers
 {
     public interface IWebParser
     {
-        Dictionary<string, ParseResult> Parse(string source);
+        Task<Dictionary<string, ParseResult>> Parse();
     }
 }

@@ -1,11 +1,13 @@
 ﻿using ExchangeRateAggregator.ApplicationContracts.Contracts.Services.ApplicationServices;
 using ExchangeRateAggregator.ApplicationContracts.Dtos;
 using ExchangeRateAggregator.ApplicationServices;
+using ExchangeRateAggregator.ApplicationServices.WebParsers;
 using ExchangeRateAggregator.Domain.Contracts;
 using ExchangeRateAggregator.Infrastructure.Persistence.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,10 +26,16 @@ namespace ExchangeRateAggregator.Composition
 
             RegisterApplicationServices(services);
 
+            RegisterWebParsers(services);
+
             RegisterSqlRepositories(services);
 
             RegisterDataContext(services, configuration);
+
+            RegisterHttpClient(services);
         }
+
+        
 
         private static void RegisterApplicationServices(IServiceCollection service)
         {
@@ -49,6 +57,12 @@ namespace ExchangeRateAggregator.Composition
                 }
             }
         }
+
+        private static void RegisterWebParsers(IServiceCollection services)
+        {
+            services.AddSingleton<WebParserFactory>();
+        }
+
         private static void RegisterSqlRepositories(
             IServiceCollection services)
         {
@@ -66,6 +80,12 @@ namespace ExchangeRateAggregator.Composition
                 options.UseNpgsql(
                     configuration.GetConnectionString(nameof(ExchangeRateAggregatorDbContext)));
             }, ServiceLifetime.Scoped);
+        }
+
+        private static void RegisterHttpClient(
+            IServiceCollection services)
+        {
+            services.AddHttpClient();
         }
     }
 }

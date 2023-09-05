@@ -12,6 +12,7 @@ namespace ExchangeRateAggregator.Domain.Entities
         public string CurrencyCode { get; set; }
         public decimal BuyRate { get; set; }
         public decimal SellRate { get; set; }
+        public int BankId { get; set; }
         public Bank Bank { get; set; }
     }
 }
