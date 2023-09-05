@@ -1,3 +1,4 @@
+using ExchangeRateAggregator.Api.Extensions;
 using ExchangeRateAggregator.ApplicationContracts.Contracts.Services.ApplicationServices;
 using ExchangeRateAggregator.Composition;
 
@@ -5,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 #region Service Scope
 CompositionRoot.RegisterDependencies(builder.Services, builder.Configuration);
+
+builder.Services.AddExchangeRateAggregatorSwagger();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -4,7 +4,7 @@ namespace ExchangeRateAggregator.Api.Extensions
 {
     public static class ServiceCollectionExtension
     {
-        public static void AddSwagger(this IServiceCollection services)
+        public static void AddExchangeRateAggregatorSwagger(this IServiceCollection services)
         {
             services.AddSwaggerGen(c =>
             {
